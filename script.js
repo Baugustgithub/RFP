@@ -116,7 +116,7 @@ function generateTimeline() {
     </ul>
     <p class="mt-4 text-sm text-gray-700 font-semibold">⏱ Duration: ${totalDays} calendar days (${businessDays} business days)</p>
     ${tcvNote ? `<p class="mt-1 text-sm text-yellow-700">${tcvNote}</p>` : ""}
-    <p class="mt-1 text-xs text-yellow-700 italic">⚠️ Timeline estimates are for planning only. Final schedules are confirmed by Procurement Services.</p>
+    <p class="mt-1 text-xs text-yellow-700 italic">⚠️ Timeline estimates are for demonstration and high-level planning purposes only. Final schedules are confirmed by Procurement Services.</p>
   `;
 
   output.innerHTML = `<div id="timelinePrintArea">${timelineHTML}</div>`;
