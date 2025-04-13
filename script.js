@@ -36,28 +36,22 @@ function generateTimeline() {
     return;
   }
 
-  const durations = {
-    low: 90,
-    medium: 110,
-    high: 130
-  };
-
   const steps = [
-    { label: "Planning with Procurement", offset: 1, type: "business" },
-    { label: "Initial RFP Draft Due to Procurement", offset: 3, type: "business" },
+    { label: "Planning with Procurement", offset: 0, type: "business" },
+    { label: "Initial RFP Draft Due to Procurement", offset: 2, type: "business" },
     { label: "Procurement Review and Edit", offset: 5, type: "business" },
     { label: "Final Draft to Procurement for Posting", offset: 3, type: "business" },
     { label: "RFP Issued via eVA", offset: 2, type: "business" },
     { label: "Firm Questions Due", offset: 10, type: "calendar" },
-    { label: "Addendum/Answers Issued", offset: 5, type: "calendar" },
+    { label: "Addendum/Answers Issued", offset: 4, type: "calendar" },
     { label: "Proposals Due", offset: 15, type: "calendar" },
-    { label: "Proposals Screened and Shared with Evaluators", offset: 3, type: "business" },
+    { label: "Proposals Screened and Shared with Evaluators", offset: 1, type: "business" },
     { label: "Evaluations Begin", offset: 1, type: "business" },
     { label: "Evaluation Period", offset: 7, type: "business" },
-    { label: "Oral Presentations (if used)", offset: 5, type: "business" },
+    { label: "Oral Presentations (if used)", offset: 2, type: "business" },
     { label: "Negotiation Period", offset: 3, type: "business" },
-    { label: "Award Justification & Contract Finalization", offset: 10, type: "fixed" },
-    { label: "Anticipated Award", offset: 2, type: "calendar" }
+    { label: "Award Justification & Contract Finalization", offset: 0, type: "fixed" },
+    { label: "Anticipated Award", offset: 1, type: "calendar" }
   ];
 
   const fixedAwardDate = new Date("2025-07-02");
@@ -87,7 +81,6 @@ function generateTimeline() {
     }
   });
 
-  // Calculate total days
   const firstDate = new Date(timeline[0].date);
   const lastDate = new Date(timeline[timeline.length - 1].date);
   const totalDays = Math.floor((lastDate - firstDate) / (1000 * 60 * 60 * 24)) + 1;
@@ -100,17 +93,17 @@ function generateTimeline() {
       ? `⚠️ Contracts over $5M may require Board of Visitors approval, which can add ~30 calendar days. See the <a href="https://bov.vcu.edu/meetings/" target="_blank" class="underline text-blue-600">BOV Meeting Schedule</a>.`
       : "";
 
-  output.innerHTML = `
-    <div id="timelinePrintArea">
-      <ul class="list-disc list-inside">
-        ${timeline.map(t => `<li><strong>${t.label}:</strong> ${t.date}</li>`).join("")}
-      </ul>
-      <p class="mt-4 text-sm text-gray-700 font-semibold">⏱ Duration: ${totalDays} calendar days (${businessDays} business days)</p>
-      <p class="mt-1 text-sm text-gray-600">Estimated Schedule Length Based on Complexity: ~${durations[complexity]} calendar days + TCV adjustments</p>
-      ${tcvNote ? `<p class="mt-1 text-sm text-yellow-700">${tcvNote}</p>` : ""}
-      <p class="mt-1 text-xs text-yellow-700 italic">⚠️ Timeline estimates are for planning only. Final schedules are confirmed by Procurement Services.</p>
-    </div>
+  // ✅ Fixed and cleaned-up HTML rendering
+  let timelineHTML = `
+    <ul class="list-disc list-inside">
+      ${timeline.map(t => `<li><strong>${t.label}:</strong> ${t.date}</li>`).join("")}
+    </ul>
+    <p class="mt-4 text-sm text-gray-700 font-semibold">⏱ Duration: ${totalDays} calendar days (${businessDays} business days)</p>
+    ${tcvNote ? `<p class="mt-1 text-sm text-yellow-700">${tcvNote}</p>` : ""}
+    <p class="mt-1 text-xs text-yellow-700 italic">⚠️ Timeline estimates are for planning only. Final schedules are confirmed by Procurement Services.</p>
   `;
+
+  output.innerHTML = `<div id="timelinePrintArea">${timelineHTML}</div>`;
 }
 
 function downloadPDF() {
