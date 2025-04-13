@@ -8,6 +8,13 @@ function addBusinessDays(date, days) {
   return date;
 }
 
+function nextWeekday(date) {
+  const day = date.getDay();
+  if (day === 6) date.setDate(date.getDate() + 2); // Saturday -> Monday
+  if (day === 0) date.setDate(date.getDate() + 1); // Sunday -> Monday
+  return date;
+}
+
 function generateTimeline() {
   const complexity = document.getElementById('complexity').value;
   const output = document.getElementById('timelineOutput');
@@ -24,29 +31,32 @@ function generateTimeline() {
   };
 
   const totalDays = durations[complexity];
-  const milestones = ["Issue RFP", "Questions Due", "Proposal Deadline", "Evaluations", "Negotiations", "Award"];
-  const today = new Date();
-  const startDate = addBusinessDays(new Date(today), 10); // Issue RFP in 10 business days
+  const issueDate = addBusinessDays(new Date(), 10); // Issue RFP 10 business days from now
 
-  const daysBetween = totalDays / (milestones.length - 1);
-  const dates = [startDate];
+  // Proposal Due = 30 calendar days from issue, adjusted to a weekday
+  const proposalDue = new Date(issueDate);
+  proposalDue.setDate(proposalDue.getDate() + 30);
+  nextWeekday(proposalDue);
 
-  for (let i = 1; i < milestones.length; i++) {
-    const next = addBusinessDays(new Date(dates[i - 1]), Math.round(daysBetween));
-    dates.push(next);
-  }
+  const evaluations = addBusinessDays(new Date(proposalDue), 5);
+  const negotiations = addBusinessDays(new Date(evaluations), 10);
+  const award = addBusinessDays(new Date(negotiations), 10);
 
-  const timelineHTML = milestones.map((m, i) => {
-    return `<li><strong>${m}:</strong> ${dates[i].toDateString()}</li>`;
-  }).join("");
-
-  output.innerHTML = `
-    <ul class="list-disc list-inside">${timelineHTML}</ul>
+  const timelineHTML = `
+    <ul class="list-disc list-inside">
+      <li><strong>Issue RFP:</strong> ${issueDate.toDateString()}</li>
+      <li><strong>Proposal Deadline:</strong> ${proposalDue.toDateString()} <span class="text-xs text-gray-500">(Typically 30-day window)</span></li>
+      <li><strong>Evaluations Begin:</strong> ${evaluations.toDateString()}</li>
+      <li><strong>Negotiation Window:</strong> ${negotiations.toDateString()}</li>
+      <li><strong>Anticipated Award:</strong> ${award.toDateString()}</li>
+    </ul>
     <p class="mt-2 text-sm text-gray-600">Total Estimated Timeline: ~${totalDays} calendar days</p>
+    <p class="mt-1 text-xs text-yellow-700 italic">⚠️ Final timelines are set by Procurement Services and may vary by project.</p>
   `;
+
+  output.innerHTML = timelineHTML;
 }
 
-// ----- Process Explorer -----
 const processSteps = [
   {
     title: "1. Planning & Requisition",
@@ -110,8 +120,7 @@ function reviewCOI() {
 
   const result = document.getElementById('coiResults');
   if (passed === total) {
-    result.innerHTML = `✅ Thank you. You’ve completed the evaluator readiness checklist. 
-    <br>This is not your official COI submission. Please submit your RFP request in RealSource. A buyer will coordinate your project and provide the full COI documentation and guidance.`;
+    result.innerHTML = `✅ Thank you. You’ve completed the evaluator readiness checklist.<br>This is not your official COI submission. Please submit your RFP request in RealSource. A buyer will coordinate your project and provide the full COI documentation and guidance.`;
   } else {
     result.innerHTML = "⚠️ Please review and confirm all items to continue.";
   }
