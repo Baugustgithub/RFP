@@ -64,70 +64,82 @@ function generateTimeline() {
   });
 
   output.innerHTML = `
-    <ul class="list-disc list-inside">
-      ${timeline.map(t => `<li><strong>${t.label}:</strong> ${t.date}</li>`).join("")}
-    </ul>
-    <p class="mt-2 text-sm text-gray-600">Estimated Total Duration: ~${durations[complexity]} calendar days</p>
-    <p class="mt-1 text-xs text-yellow-700 italic">⚠️ Timeline estimates are for planning only. Final schedules are confirmed by Procurement Services.</p>
+    <div id="timelinePrintArea">
+      <ul class="list-disc list-inside">
+        ${timeline.map(t => `<li><strong>${t.label}:</strong> ${t.date}</li>`).join("")}
+      </ul>
+      <p class="mt-2 text-sm text-gray-600">Estimated Total Duration: ~${durations[complexity]} calendar days</p>
+      <p class="mt-1 text-xs text-yellow-700 italic">⚠️ Timeline estimates are for planning only. Final schedules are confirmed by Procurement Services.</p>
+    </div>
   `;
 }
 
+function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const source = document.getElementById("timelinePrintArea").innerText;
+  doc.setFontSize(10);
+  doc.text(source, 10, 10);
+  doc.save("VCU-RFP-Timeline.pdf");
+}
+
+// --- Process Explorer ---
 const processSteps = [
   {
     title: "1. Planning with Procurement",
-    detail: "An initial meeting is scheduled between the department and Procurement to align on goals, timeline, and roles. This ensures early coordination and sets expectations. Procurement helps advise, guide, and manage the process, including setting schedule expectations, helping identify evaluation committee members, providing guidance on solicitation strategy, and leading communications with potential offerors."
+    detail: "An initial meeting is scheduled between the department and Procurement to align on goals, timeline, and roles. Procurement helps advise, guide, and manage the process, including committee membership and direct solicitation strategy."
   },
   {
     title: "2. Initial RFP Draft Due to Procurement",
-    detail: "The department submits draft information to Procurement. This includes the statement of needs, background, suggested evaluation criteria, and timeline preferences."
+    detail: "The department submits draft information including the statement of needs, background, suggested evaluation criteria, and timeline preferences."
   },
   {
     title: "3. Procurement Review and Edit",
-    detail: "Procurement reviews the draft and makes edits as needed. This includes ensuring compliance with procurement regulations and aligning the structure and scoring with university standards."
+    detail: "Procurement reviews the draft and makes compliance edits, aligns formatting, and prepares the content for public posting."
   },
   {
     title: "4. Final Draft to Procurement for Posting",
-    detail: "After review, the final RFP is submitted to Procurement for public posting. All required approvals and internal approvals should be complete at this stage."
+    detail: "Once approved, the final version is submitted for posting. Department approvals should be complete at this stage."
   },
   {
     title: "5. RFP Issued via eVA",
-    detail: "Procurement posts the RFP on eVA and coordinates responses via Smartsheet. The public posting period typically ranges from 25–35 days."
+    detail: "Procurement posts the RFP on eVA and coordinates vendor responses via Smartsheet. Standard posting is 25–35 days."
   },
   {
     title: "6. Firm Questions Due",
-    detail: "Firms are given an opportunity to submit written questions. The due date must be clearly stated in the RFP timeline."
+    detail: "Vendors may submit questions by the deadline in the RFP. Procurement manages this deadline."
   },
   {
     title: "7. Addendum/Answers Issued",
-    detail: "Procurement works with the department to draft official responses and posts them via eVA/VBO as an addendum to the RFP."
+    detail: "Procurement collaborates with the department to issue formal answers through eVA/VBO."
   },
   {
     title: "8. Proposals Due",
-    detail: "All proposals must be received by the deadline. Late submissions are generally not accepted. Procurement checks compliance before forwarding to evaluators."
+    detail: "Proposals must be received on time. Late submissions are not considered. Procurement screens for basic compliance."
   },
   {
     title: "9. Proposals Screened and Shared with Evaluators",
-    detail: "Procurement reviews proposals for completeness, informalities, etc., and proposals are then shared with the evaluation team."
+    detail: "Proposals are reviewed by Procurement and distributed to evaluators with appropriate redactions if needed."
   },
   {
     title: "10. Evaluations Begin",
-    detail: "Evaluators receive their scoring sheets and begin reviewing proposals independently based on the published evaluation criteria."
+    detail: "Scoring sheets are issued, and evaluators review proposals independently based on published criteria."
   },
   {
     title: "11. Evaluation Period",
-    detail: "Evaluators complete their scoring. Procurement may schedule a group review meeting to compile scores and shortlist top offers."
+    detail: "Evaluators submit scores. Procurement may host meetings to review and shortlist top firms."
   },
   {
     title: "12. Oral Presentations (if used)",
-    detail: "If required, top vendors may be invited to present. This helps clarify solutions and adds depth to evaluations."
+    detail: "Selected vendors may be invited to present to the evaluation team. Attendance is coordinated by Procurement."
   },
   {
     title: "13. Negotiation Period",
-    detail: "Procurement leads negotiations with the top-ranked vendor(s). This may include scope, pricing, business terms, etc."
+    detail: "Procurement leads structured negotiations covering scope, price, and key business terms."
   },
   {
     title: "14. Anticipated Award Posted",
-    detail: "Once final evaluations and negotiations are complete, an award notice is posted on eVA and the selected vendor is notified. Procurement assists with justification memos and routes the final contract for signature."
+    detail: "Award is announced on eVA. Procurement supports justification memos and initiates contract signature routing."
   }
 ];
 
@@ -135,7 +147,7 @@ window.onload = () => {
   const accordion = document.getElementById('processAccordion');
   processSteps.forEach((step) => {
     accordion.innerHTML += `
-      <details class="bg-white border rounded p-3">
+      <details class="bg-white border rounded p-3 shadow-sm">
         <summary class="font-semibold cursor-pointer">${step.title}</summary>
         <p class="mt-2 text-sm">${step.detail}</p>
       </details>`;
