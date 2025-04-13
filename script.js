@@ -36,21 +36,25 @@ function generateTimeline() {
     return;
   }
 
+  let complexityOffset = 0;
+  if (complexity === "medium") complexityOffset = 1;
+  if (complexity === "high") complexityOffset = 2;
+
   const steps = [
-    { label: "Planning with Procurement", offset: 5, type: "business" },
-    { label: "Initial RFP Draft Due to Procurement", offset: 5, type: "business" },
-    { label: "Procurement Review and Edit", offset: 6, type: "business" },
-    { label: "Final Draft to Procurement for Posting", offset: 5, type: "business" },
+    { label: "Planning with Procurement", offset: 0, type: "business" },
+    { label: "Initial RFP Draft Due to Procurement", offset: 2, type: "business" },
+    { label: "Procurement Review and Edit", offset: 5, type: "business" },
+    { label: "Final Draft to Procurement for Posting", offset: 3, type: "business" },
     { label: "RFP Issued via eVA", offset: 2, type: "business" },
     { label: "Firm Questions Due", offset: 10, type: "calendar" },
-    { label: "Addendum/Answers Issued", offset: 5, type: "calendar" },
+    { label: "Addendum/Answers Issued", offset: 4, type: "calendar" },
     { label: "Proposals Due", offset: 15, type: "calendar" },
     { label: "Proposals Screened and Shared with Evaluators", offset: 1, type: "business" },
     { label: "Evaluations Begin", offset: 1, type: "business" },
-    { label: "Evaluation Period", offset: 8, type: "business" },
-    { label: "Oral Presentations (if used)", offset: 5, type: "business" },
-    { label: "Negotiation Period", offset: 6, type: "business" },
-    { label: "Award Justification & Contract Finalization", offset: 11, type: "fixed" },
+    { label: "Evaluation Period", offset: 7, type: "business" },
+    { label: "Oral Presentations (if used)", offset: 2, type: "business" },
+    { label: "Negotiation Period", offset: 3, type: "business" },
+    { label: "Award Justification & Contract Finalization", offset: 0, type: "fixed" },
     { label: "Anticipated Award", offset: 1, type: "calendar" }
   ];
 
@@ -65,10 +69,10 @@ function generateTimeline() {
     if (step.type === "fixed" && step.label === "Award Justification & Contract Finalization") {
       date = new Date(fixedAwardDate);
     } else if (step.type === "business") {
-      date = addBusinessDays(baseDate, step.offset);
+      date = addBusinessDays(baseDate, step.offset + complexityOffset);
     } else {
       date = new Date(baseDate);
-      date.setDate(date.getDate() + step.offset);
+      date.setDate(date.getDate() + step.offset + complexityOffset);
       date = nextWeekday(date);
     }
 
@@ -93,7 +97,6 @@ function generateTimeline() {
       ? `⚠️ Contracts over $5M may require Board of Visitors approval, which can add ~30 calendar days. See the <a href="https://bov.vcu.edu/meetings/" target="_blank" class="underline text-blue-600">BOV Meeting Schedule</a>.`
       : "";
 
-  // ✅ Fixed and cleaned-up HTML rendering
   let timelineHTML = `
     <ul class="list-disc list-inside">
       ${timeline.map(t => `<li><strong>${t.label}:</strong> ${t.date}</li>`).join("")}
