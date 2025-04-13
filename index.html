@@ -1,35 +1,91 @@
-<!-- [Previous content remains the same above this section] -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VCU RFP Navigator</title>
 
-<!-- Timeline Builder -->
-<section>
-  <h2 class="text-xl font-semibold text-yellow-700 mb-2">Interactive RFP Timeline Builder</h2>
-  <p class="text-sm text-gray-600 mb-4">This tool simulates a typical RFP schedule based on VCU Procurement’s guidance. All dates are approximations and for planning only.</p>
-  <div class="space-y-4">
-    <label class="block font-medium">Project Complexity:</label>
-    <select id="complexity" class="border rounded p-2 w-full max-w-md">
-      <option value="">Select complexity</option>
-      <option value="low">Simple</option>
-      <option value="medium">Moderate</option>
-      <option value="high">Complex</option>
-    </select>
-    <label class="block font-medium mt-4">Total Contract Value (TCV):</label>
-    <select id="tcv" class="border rounded p-2 w-full max-w-md">
-      <option value="under">Under $2M</option>
-      <option value="2m">Over $2M (Adds 10 days)</option>
-      <option value="5m">Over $5M (Adds 30 days)</option>
-    </select>
-    <div class="flex gap-4 flex-wrap">
-      <button onclick="generateTimeline()" class="px-4 py-2 bg-yellow-600 text-white rounded font-semibold">Generate Timeline</button>
-      <button onclick="downloadPDF()" class="px-4 py-2 bg-gray-700 text-white rounded font-semibold">Download Full Page as PDF</button>
+  <!-- ✅ Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- For PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- Optional font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-inter">
+  <div id="pageContent" class="max-w-5xl mx-auto p-6 space-y-12">
+
+    <!-- Intro Message -->
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6 rounded">
+      <p class="font-bold">Please Note</p>
+      <p>This is a simplified overview of the RFP process designed to give departments a high-level sense of what to expect. It is not a complete or official representation of VCU’s formal RFP procedures. Please submit a requisition over $10,000 with comments and supporting documentation to initiate the process and to work directly with a buyer.</p>
     </div>
-    <div id="timelineOutput" class="mt-4 text-sm text-gray-700"></div>
+
+    <!-- Header -->
+    <header class="text-center">
+      <h1 class="text-3xl font-bold text-yellow-600">VCU RFP Navigator</h1>
+      <p class="text-sm text-gray-700">An interactive guide for departments navigating the formal RFP process</p>
+    </header>
+
+    <!-- Timeline Builder -->
+    <section>
+      <h2 class="text-xl font-semibold text-yellow-700 mb-2">Interactive RFP Timeline Builder</h2>
+      <p class="text-sm text-gray-600 mb-4">This tool simulates a typical RFP schedule based on VCU Procurement’s guidance. All dates are approximations and for planning only.</p>
+      <div class="space-y-4">
+        <label class="block font-medium">Project Complexity:</label>
+        <select id="complexity" class="border rounded p-2 w-full max-w-md">
+          <option value="">Select complexity</option>
+          <option value="low">Simple</option>
+          <option value="medium">Moderate</option>
+          <option value="high">Complex</option>
+        </select>
+        <label class="block font-medium mt-4">Total Contract Value (TCV):</label>
+        <select id="tcv" class="border rounded p-2 w-full max-w-md">
+          <option value="under">Under $2M</option>
+          <option value="2m">Over $2M (Adds 10 days)</option>
+          <option value="5m">Over $5M (Adds 30 days)</option>
+        </select>
+        <div class="flex gap-4 flex-wrap">
+          <button onclick="generateTimeline()" class="px-4 py-2 bg-yellow-600 text-white rounded font-semibold">Generate Timeline</button>
+          <button onclick="downloadPDF()" class="px-4 py-2 bg-gray-700 text-white rounded font-semibold">Download Full Page as PDF</button>
+        </div>
+        <div id="timelineOutput" class="mt-4 text-sm text-gray-700"></div>
+      </div>
+    </section>
+
+    <!-- Process Explorer -->
+    <section>
+      <h2 class="text-xl font-semibold text-yellow-700 mb-4">RFP Process Explorer</h2>
+      <div id="processAccordion" class="space-y-2"></div>
+    </section>
+
+    <!-- Evaluator Checklist -->
+    <section>
+      <h2 class="text-xl font-semibold text-yellow-700 mb-2">Evaluator Readiness Acknowledgment</h2>
+      <p class="text-sm mb-4 text-gray-700">
+        Before participating in an RFP evaluation, all committee members must understand their role and obligations. This checklist provides an overview. Note: This does not replace the official COI submission, which will be handled by your assigned buyer.
+      </p>
+      <form id="coiChecklist" class="space-y-2"></form>
+      <button onclick="reviewCOI()" class="mt-4 px-4 py-2 bg-green-700 text-white rounded">Complete Acknowledgment</button>
+      <div id="coiResults" class="mt-4 text-sm text-green-800"></div>
+    </section>
+
+    <!-- Resource Hub -->
+    <section>
+      <h2 class="text-xl font-semibold text-yellow-700 mb-4">Resource Hub</h2>
+      <ul class="list-disc list-inside space-y-1 text-yellow-800">
+        <li><a href="https://docs.google.com/spreadsheets/d/1eYIycv-illo2WLVko0eJ7GfmLj5hTxBEJH_REal3vb8/edit?gid=0" target="_blank">Official RFP Schedule (Google Sheet)</a></li>
+        <li><a href="https://bov.vcu.edu/meetings/" target="_blank">Board of Visitors Meeting Schedule</a></li>
+        <li><a href="#" target="_blank">RFP Template (DOCX)</a></li>
+        <li><a href="https://vcu-amc.ivanticloud.com/" target="_blank">Submit a Service Ticket</a></li>
+        <li><a href="mailto:purchasing@vcu.edu">Email Procurement</a></li>
+      </ul>
+    </section>
+
   </div>
-</section>
-
-<!-- Process Explorer -->
-<section>
-  <h2 class="text-xl font-semibold text-yellow-700 mb-4">RFP Process Explorer</h2>
-  <div id="processAccordion" class="space-y-2"></div>
-</section>
-
-<!-- [Remaining content stays unchanged below this section] -->
+  <script src="script.js"></script>
+</body>
+</html>
