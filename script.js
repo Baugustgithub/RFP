@@ -30,26 +30,26 @@ function generateTimeline() {
     high: 130
   };
 
-  const start = addBusinessDays(new Date(), 0);
+  const base = addBusinessDays(new Date(), 0);
   const steps = [
-    { name: "Planning call with Procurement", offset: 0, type: "business" },
-    { name: "Initial RFP draft due to Procurement", offset: 2, type: "business" },
-    { name: "Procurement review and edit", offset: 5, type: "business" },
-    { name: "Final draft to Procurement for posting", offset: 3, type: "business" },
-    { name: "RFP issued via eVA (Smartsheet)", offset: 2, type: "business" },
-    { name: "Vendor questions due", offset: 10, type: "calendar" },
-    { name: "Addendum/answers issued", offset: 4, type: "calendar" },
-    { name: "Proposals due", offset: 15, type: "calendar" },
-    { name: "Redacted proposals shared with evaluators", offset: 1, type: "business" },
-    { name: "Evaluations begin", offset: 1, type: "business" },
-    { name: "Evaluation period", offset: 7, type: "business" },
-    { name: "Oral presentations (if used)", offset: 2, type: "business" },
-    { name: "Negotiation period", offset: 5, type: "business" },
-    { name: "Anticipated award posted", offset: 3, type: "business" }
+    { name: "Planning with Procurement", offset: 0, type: "business" },
+    { name: "Initial RFP Draft Due to Procurement", offset: 2, type: "business" },
+    { name: "Procurement Review and Edit", offset: 5, type: "business" },
+    { name: "Final Draft to Procurement for Posting", offset: 3, type: "business" },
+    { name: "RFP Issued via eVA", offset: 2, type: "business" },
+    { name: "Firm Questions Due", offset: 10, type: "calendar" },
+    { name: "Addendum/Answers Issued", offset: 4, type: "calendar" },
+    { name: "Proposals Due", offset: 15, type: "calendar" },
+    { name: "Proposals Screened and Shared with Evaluators", offset: 1, type: "business" },
+    { name: "Evaluations Begin", offset: 1, type: "business" },
+    { name: "Evaluation Period", offset: 7, type: "business" },
+    { name: "Oral Presentations (if used)", offset: 2, type: "business" },
+    { name: "Negotiation Period", offset: 5, type: "business" },
+    { name: "Anticipated Award Posted", offset: 3, type: "business" }
   ];
 
   let timeline = [];
-  let baseDate = new Date(start);
+  let baseDate = new Date(base);
 
   steps.forEach(step => {
     let date = new Date(baseDate);
@@ -68,47 +68,46 @@ function generateTimeline() {
       ${timeline.map(t => `<li><strong>${t.label}:</strong> ${t.date}</li>`).join("")}
     </ul>
     <p class="mt-2 text-sm text-gray-600">Estimated Total Duration: ~${durations[complexity]} calendar days</p>
-    <p class="mt-1 text-xs text-yellow-700 italic">⚠️ Timeline estimates based on standard RFP flows. Actual dates are confirmed by Procurement Services.</p>
+    <p class="mt-1 text-xs text-yellow-700 italic">⚠️ Timeline estimates are for planning only. Final schedules are confirmed by Procurement Services.</p>
   `;
 }
 
-// --- Full Process Explorer with official descriptions ---
 const processSteps = [
   {
-    title: "1. Planning Call with Procurement",
-    detail: "An initial meeting is scheduled between the department and Procurement to align on goals, timeline, and roles. This ensures early coordination and sets expectations."
+    title: "1. Planning with Procurement",
+    detail: "An initial meeting is scheduled between the department and Procurement to align on goals, timeline, and roles. This ensures early coordination and sets expectations. Procurement helps advise, guide, and manage the process, including setting schedule expectations, helping identify evaluation committee members, providing guidance on solicitation strategy, and leading communications with potential offerors."
   },
   {
     title: "2. Initial RFP Draft Due to Procurement",
-    detail: "The department submits the first version of the RFP. This includes the statement of needs, background, evaluation criteria, and timeline preferences."
+    detail: "The department submits draft information to Procurement. This includes the statement of needs, background, suggested evaluation criteria, and timeline preferences."
   },
   {
     title: "3. Procurement Review and Edit",
-    detail: "Procurement reviews the draft to ensure compliance with the Virginia Public Procurement Act and university policies. Edits are made as needed."
+    detail: "Procurement reviews the draft and makes edits as needed. This includes ensuring compliance with procurement regulations and aligning the structure and scoring with university standards."
   },
   {
     title: "4. Final Draft to Procurement for Posting",
-    detail: "After review, the final RFP is submitted to Procurement for public posting. All required approvals and internal sign-offs should be complete at this stage."
+    detail: "After review, the final RFP is submitted to Procurement for public posting. All required approvals and internal approvals should be complete at this stage."
   },
   {
-    title: "5. RFP Issued via eVA (Smartsheet)",
+    title: "5. RFP Issued via eVA",
     detail: "Procurement posts the RFP on eVA and coordinates responses via Smartsheet. The public posting period typically ranges from 25–35 days."
   },
   {
-    title: "6. Vendor Questions Due",
-    detail: "Vendors are given an opportunity to submit written questions. The due date must be clearly stated in the RFP timeline."
+    title: "6. Firm Questions Due",
+    detail: "Firms are given an opportunity to submit written questions. The due date must be clearly stated in the RFP timeline."
   },
   {
     title: "7. Addendum/Answers Issued",
-    detail: "Procurement works with the department to draft official responses and posts them via Smartsheet as an addendum to the RFP."
+    detail: "Procurement works with the department to draft official responses and posts them via eVA/VBO as an addendum to the RFP."
   },
   {
     title: "8. Proposals Due",
-    detail: "All proposals must be received by the deadline. Late submissions will not be accepted. Procurement checks compliance before forwarding to evaluators."
+    detail: "All proposals must be received by the deadline. Late submissions are generally not accepted. Procurement checks compliance before forwarding to evaluators."
   },
   {
-    title: "9. Redacted Proposals Shared with Evaluators",
-    detail: "Procurement redacts proposals (if needed) to remove pricing or other sensitive data before distributing them to the evaluation team."
+    title: "9. Proposals Screened and Shared with Evaluators",
+    detail: "Procurement reviews proposals for completeness, informalities, etc., and proposals are then shared with the evaluation team."
   },
   {
     title: "10. Evaluations Begin",
@@ -120,15 +119,15 @@ const processSteps = [
   },
   {
     title: "12. Oral Presentations (if used)",
-    detail: "If specified in the RFP, top vendors may be invited to present. This helps clarify solutions and adds depth to evaluations."
+    detail: "If required, top vendors may be invited to present. This helps clarify solutions and adds depth to evaluations."
   },
   {
     title: "13. Negotiation Period",
-    detail: "Procurement leads negotiations with the top-ranked vendor(s). This may include scope clarification, pricing, or terms refinement."
+    detail: "Procurement leads negotiations with the top-ranked vendor(s). This may include scope, pricing, business terms, etc."
   },
   {
     title: "14. Anticipated Award Posted",
-    detail: "Once final evaluations and negotiations are complete, an award notice is posted on eVA and the selected vendor is notified."
+    detail: "Once final evaluations and negotiations are complete, an award notice is posted on eVA and the selected vendor is notified. Procurement assists with justification memos and routes the final contract for signature."
   }
 ];
 
