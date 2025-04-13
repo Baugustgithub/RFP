@@ -43,19 +43,19 @@ function generateTimeline() {
   const steps = [
     { label: "Submit a Requisition and Discussion", offset: 2, type: "business" },
     { label: "Initial RFP Draft Due to Procurement", offset: 3, type: "business" },
-    { label: "Procurement Review and Edit", offset: 5, type: "business" },
+    { label: "Procurement Review and Edit", offset: 4, type: "business" },
     { label: "Final Draft to Procurement for Posting", offset: 3, type: "business" },
-    { label: "RFP Issued via eVA", offset: 2, type: "business" },
-    { label: "Firm Questions Due", offset: 10, type: "business" },
-    { label: "Addendum/Answers Issued", offset: 5, type: "business" },
-    { label: "Proposals Due", offset: 15, type: "business" },
+    { label: "RFP Issued via eVA", offset: 1, type: "business" },
+    { label: "Firm Questions Due", offset: 7, type: "business" },
+    { label: "Addendum/Answers Issued", offset: 4, type: "business" },
+    { label: "Proposals Due", offset: 10, type: "business" },
     { label: "Proposals Screened and Shared with Evaluators", offset: 4, type: "business" },
     { label: "Evaluations Begin", offset: 1, type: "business" },
-    { label: "Evaluation Period", offset: 7, type: "business" },
+    { label: "Evaluation Period", offset: 6, type: "business" },
     { label: "Oral Presentations (if used)", offset: 5, type: "business" },
     { label: "Negotiation Period", offset: 7, type: "business" },
-    { label: "Award Justification & Contract Finalization", offset: 10, type: "business" },
-    { label: "Anticipated Award", offset: 2, type: "business" }
+    { label: "Award Justification & Contract Finalization", offset: 9, type: "business" },
+    { label: "Anticipated Award", offset: 1, type: "business" }
   ];
 
   const excludedSteps = [
