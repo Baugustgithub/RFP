@@ -37,8 +37,8 @@ function generateTimeline() {
   }
 
   let complexityOffset = 0;
-  if (complexity === "medium") complexityOffset = 1;
-  if (complexity === "high") complexityOffset = 2;
+  if (complexity === "medium") complexityOffset = 2;
+  if (complexity === "high") complexityOffset = 3;
 
   const steps = [
     { label: "Planning with Procurement", offset: 0, type: "business" },
