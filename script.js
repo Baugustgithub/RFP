@@ -107,7 +107,7 @@ function generateTimeline() {
     tcv === "2m"
       ? "⚠️ Contracts over $2M may require higher-level review and can add ~10 calendar days."
       : tcv === "5m"
-      ? `⚠️ Contracts over $5M may require Board of Visitors approval, which can add ~30 calendar days. See the <a href="https://bov.vcu.edu/meetings/" target="_blank" class="underline text-blue-600">BOV Meeting Schedule</a>.`
+      ? `⚠️ Contracts over $5M may require Board of Visitors approval, which can add ~30+ calendar days based on BOV meeting schedule and timing. See the <a href="https://bov.vcu.edu/meetings/" target="_blank" class="underline text-blue-600">BOV Meeting Schedule</a>.`
       : "";
 
   let timelineHTML = `
