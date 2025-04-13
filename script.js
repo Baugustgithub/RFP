@@ -17,6 +17,7 @@ function nextWeekday(date) {
 
 function generateTimeline() {
   const complexity = document.getElementById('complexity').value;
+  const tcv = document.getElementById('tcv').value;
   const output = document.getElementById('timelineOutput');
 
   if (!complexity) {
@@ -30,7 +31,7 @@ function generateTimeline() {
     high: 130
   };
 
-  const base = addBusinessDays(new Date(), 2); // start 2 business days in future
+  const base = addBusinessDays(new Date(), 2); // Start 2 business days in future
   const steps = [
     { name: "Planning with Procurement", offset: 0, type: "business" },
     { name: "Initial RFP Draft Due to Procurement", offset: 2, type: "business" },
@@ -44,9 +45,27 @@ function generateTimeline() {
     { name: "Evaluations Begin", offset: 1, type: "business" },
     { name: "Evaluation Period", offset: 7, type: "business" },
     { name: "Oral Presentations (if used)", offset: 2, type: "business" },
-    { name: "Negotiation Period", offset: 5, type: "business" },
-    { name: "Anticipated Award Posted", offset: 3, type: "business" }
+    { name: "Negotiation Period", offset: 5, type: "business" }
   ];
+
+  let additionalDays = 0;
+  let tcvNote = "";
+
+  if (tcv === "2m") {
+    additionalDays = 10;
+    tcvNote = "⚠️ Contracts over $2M may require higher-level review and can add ~10 calendar days.";
+  } else if (tcv === "5m") {
+    additionalDays = 30;
+    tcvNote = `⚠️ Contracts over $5M may require Board of Visitors approval, which can add ~30 calendar days. See the <a href="https://bov.vcu.edu/meetings/" target="_blank" class="underline text-blue-600">BOV Meeting Schedule</a>.`;
+  }
+
+  const finalStep = {
+    name: "Anticipated Award & Contract Finalization",
+    offset: additionalDays,
+    type: "calendar"
+  };
+
+  steps.push(finalStep);
 
   let timeline = [];
   let baseDate = new Date(base);
@@ -68,7 +87,8 @@ function generateTimeline() {
       <ul class="list-disc list-inside">
         ${timeline.map(t => `<li><strong>${t.label}:</strong> ${t.date}</li>`).join("")}
       </ul>
-      <p class="mt-2 text-sm text-gray-600">Estimated Total Duration: ~${durations[complexity]} calendar days</p>
+      <p class="mt-2 text-sm text-gray-600">Estimated Total Duration: ~${durations[complexity] + additionalDays} calendar days</p>
+      ${tcvNote ? `<p class="mt-1 text-sm text-yellow-700">${tcvNote}</p>` : ""}
       <p class="mt-1 text-xs text-yellow-700 italic">⚠️ Timeline estimates are for planning only. Final schedules are confirmed by Procurement Services.</p>
     </div>
   `;
@@ -141,8 +161,8 @@ const processSteps = [
     detail: "Procurement leads structured negotiations covering scope, price, and key business terms."
   },
   {
-    title: "14. Anticipated Award Posted",
-    detail: "Award is announced on eVA. Procurement supports justification memos and initiates contract signature routing."
+    title: "14. Anticipated Award & Contract Finalization",
+    detail: "Award is announced on eVA. Procurement supports justification memos and initiates contract signature routing. Higher value contracts may involve legal review, CFO sign-off, or Board of Visitors approval."
   }
 ];
 
