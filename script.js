@@ -30,7 +30,7 @@ function generateTimeline() {
     high: 130
   };
 
-  const base = addBusinessDays(new Date(), 0);
+  const base = addBusinessDays(new Date(), 2); // start 2 business days in future
   const steps = [
     { name: "Planning with Procurement", offset: 0, type: "business" },
     { name: "Initial RFP Draft Due to Procurement", offset: 2, type: "business" },
@@ -75,15 +75,18 @@ function generateTimeline() {
 }
 
 function downloadPDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  const source = document.getElementById("timelinePrintArea").innerText;
-  doc.setFontSize(10);
-  doc.text(source, 10, 10);
-  doc.save("VCU-RFP-Timeline.pdf");
+  const element = document.getElementById('pageContent');
+  html2canvas(element, { scale: 2 }).then(canvas => {
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new window.jspdf.jsPDF('p', 'mm', 'a4');
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save("VCU-RFP-Navigator.pdf");
+  });
 }
 
-// --- Process Explorer ---
 const processSteps = [
   {
     title: "1. Planning with Procurement",
