@@ -46,16 +46,16 @@ function generateTimeline() {
     { label: "Procurement Review and Edit", offset: 5, type: "business" },
     { label: "Final Draft to Procurement for Posting", offset: 3, type: "business" },
     { label: "RFP Issued via eVA", offset: 2, type: "business" },
-    { label: "Firm Questions Due", offset: 10, type: "calendar" },
-    { label: "Addendum/Answers Issued", offset: 5, type: "calendar" },
-    { label: "Proposals Due", offset: 15, type: "calendar" },
+    { label: "Firm Questions Due", offset: 10, type: "business" },
+    { label: "Addendum/Answers Issued", offset: 5, type: "business" },
+    { label: "Proposals Due", offset: 15, type: "business" },
     { label: "Proposals Screened and Shared with Evaluators", offset: 4, type: "business" },
     { label: "Evaluations Begin", offset: 1, type: "business" },
     { label: "Evaluation Period", offset: 7, type: "business" },
     { label: "Oral Presentations (if used)", offset: 5, type: "business" },
     { label: "Negotiation Period", offset: 7, type: "business" },
-    { label: "Award Justification & Contract Finalization", offset: 10, type: "fixed" },
-    { label: "Anticipated Award", offset: 2, type: "calendar" }
+    { label: "Award Justification & Contract Finalization", offset: 10, type: "business" },
+    { label: "Anticipated Award", offset: 2, type: "business" }
   ];
 
   const excludedSteps = [
