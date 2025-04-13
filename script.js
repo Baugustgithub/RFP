@@ -33,21 +33,21 @@ function generateTimeline() {
 
   const base = addBusinessDays(new Date(), 2);
   const steps = [
-    { name: "Planning with Procurement", offset: 0, type: "business" },
+    { name: "Planning with Procurement", offset: 3, type: "business" },
     { name: "Initial RFP Draft Due to Procurement", offset: 2, type: "business" },
     { name: "Procurement Review and Edit", offset: 5, type: "business" },
     { name: "Final Draft to Procurement for Posting", offset: 3, type: "business" },
-    { name: "RFP Issued via eVA", offset: 2, type: "business" },
+    { name: "RFP Issued via eVA", offset: 1, type: "business" },
     { name: "Firm Questions Due", offset: 10, type: "calendar" },
-    { name: "Addendum/Answers Issued", offset: 4, type: "calendar" },
+    { name: "Addendum/Answers Issued", offset: 5, type: "calendar" },
     { name: "Proposals Due", offset: 15, type: "calendar" },
-    { name: "Proposals Screened and Shared with Evaluators", offset: 1, type: "business" },
+    { name: "Proposals Screened and Shared with Evaluators", offset: 2, type: "business" },
     { name: "Evaluations Begin", offset: 1, type: "business" },
     { name: "Evaluation Period", offset: 7, type: "business" },
-    { name: "Oral Presentations (if used)", offset: 2, type: "business" },
+    { name: "Oral Presentations (if used)", offset: 5, type: "business" },
     { name: "Negotiation Period", offset: 5, type: "business" },
-    { name: "Award Justification & Contract Finalization", offset: 0, type: "calendar" },
-    { name: "Anticipated Award", offset: 1, type: "business" }
+    { name: "Award Justification & Contract Finalization", offset: 10, type: "calendar" },
+    { name: "Anticipated Award", offset: 2, type: "business" }
   ];
 
   let tcvDelay = 0;
