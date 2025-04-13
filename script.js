@@ -41,7 +41,7 @@ function generateTimeline() {
   if (complexity === "high") complexityOffset = 2;
 
   const steps = [
-    { label: "Planning with Procurement", offset: 3, type: "business" },
+    { label: "Submit a Requisition and Discussion", offset: 5, type: "business" },
     { label: "Initial RFP Draft Due to Procurement", offset: 3, type: "business" },
     { label: "Procurement Review and Edit", offset: 6, type: "business" },
     { label: "Final Draft to Procurement for Posting", offset: 3, type: "business" },
@@ -142,8 +142,8 @@ window.onload = () => {
   const accordion = document.getElementById('processAccordion');
   const processSteps = [
     {
-      title: "1. Planning with Procurement",
-      detail: "An initial meeting is scheduled between the department and Procurement to align on goals, timeline, and roles. Procurement helps advise, guide, and manage the process, including committee membership and direct solicitation strategy."
+      title: "1. Submit a Requisition and Discussion",
+      detail: "To initiate the process, first submit a requisition for over $10,000.  Please be sure to include any supporting documentation, and please add a comment indicating the desire or need to being the RFP process.  From there, the department and Procurement can work on aligning goals, defining a schedule, and discussing roles. Procurement helps advise, guide, and manage the process, including committee membership and direct solicitation strategy."
     },
     {
       title: "2. Initial RFP Draft Due to Procurement",
