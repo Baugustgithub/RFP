@@ -49,7 +49,7 @@ function generateTimeline() {
     { label: "Firm Questions Due", offset: 10, type: "business" },
     { label: "Addendum/Answers Issued", offset: 4, type: "business" },
     { label: "Proposals Due", offset: 15, type: "business" },
-    { label: "Proposals Screened and Shared with Evaluators", offset: 1, type: "business" },
+    { label: "Proposals Screened and Shared with Evaluators", offset: 4, type: "business" },
     { label: "Evaluations Begin", offset: 1, type: "business" },
     { label: "Evaluation Period", offset: 7, type: "business" },
     { label: "Oral Presentations (if used)", offset: 5, type: "business" },
