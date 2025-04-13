@@ -10,15 +10,16 @@
 <body class="bg-gray-50 text-gray-800 font-inter">
   <div class="max-w-5xl mx-auto p-6 space-y-12">
 
+    <!-- Header -->
     <header class="text-center">
       <h1 class="text-3xl font-bold text-blue-900">VCU RFP Navigator</h1>
-      <p class="text-sm text-gray-600">Interactive guide through the formal RFP process</p>
+      <p class="text-sm text-gray-600">An interactive guide for departments navigating the formal RFP process</p>
     </header>
 
     <!-- Timeline Builder -->
     <section>
       <h2 class="text-xl font-semibold text-blue-800 mb-2">Interactive RFP Timeline Builder</h2>
-      <p class="text-sm text-gray-600 mb-4">Use this tool to generate a sample timeline. Actual RFP dates will be finalized with Procurement Services.</p>
+      <p class="text-sm text-gray-600 mb-4">This tool simulates a typical RFP schedule based on VCU Procurement's planning standards. All dates are approximate and for reference only.</p>
       <div class="space-y-4">
         <label class="block font-medium">Project Complexity:</label>
         <select id="complexity" class="border rounded p-2 w-full max-w-md">
@@ -41,7 +42,10 @@
     <!-- Evaluator Checklist -->
     <section>
       <h2 class="text-xl font-semibold text-blue-800 mb-2">Evaluator Readiness & COI Acknowledgment</h2>
-      <p class="text-sm mb-4 text-gray-700">Before serving on an evaluation committee, it is important to understand your responsibilities and obligations. This checklist provides a summary. Official COI forms and project specifics will be coordinated by your assigned buyer.</p>
+      <p class="text-sm mb-4 text-gray-700">
+        Before participating in an RFP evaluation, all committee members must understand their role and obligations. 
+        This checklist helps orient evaluators to expectations. Note: This does not replace the official COI submission, which is handled by Procurement Services.
+      </p>
       <form id="coiChecklist" class="space-y-2"></form>
       <button onclick="reviewCOI()" class="mt-4 px-4 py-2 bg-green-700 text-white rounded">Complete Acknowledgment</button>
       <div id="coiResults" class="mt-4 text-sm text-green-800"></div>
@@ -52,8 +56,8 @@
       <h2 class="text-xl font-semibold text-blue-800 mb-4">Resource Hub</h2>
       <ul class="list-disc list-inside space-y-1 text-blue-700">
         <li><a href="#" target="_blank">Evaluator Guide & COI</a></li>
-        <li><a href="#" target="_blank">RFP Schedule</a></li>
-        <li><a href="#" target="_blank">RFP Template</a></li>
+        <li><a href="#" target="_blank">RFP Schedule Template</a></li>
+        <li><a href="#" target="_blank">RFP Template (DOCX)</a></li>
         <li><a href="https://vcu-amc.ivanticloud.com/" target="_blank">Submit a Service Ticket</a></li>
         <li><a href="mailto:purchasing@vcu.edu">Email Procurement</a></li>
       </ul>
