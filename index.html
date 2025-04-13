@@ -100,16 +100,16 @@ function generateTimeline() {
       ? `⚠️ Contracts over $5M may require Board of Visitors approval, which can add ~30 calendar days. See the <a href="https://bov.vcu.edu/meetings/" target="_blank" class="underline text-blue-600">BOV Meeting Schedule</a>.`
       : "";
 
-  output.innerHTML = `
-    <div id="timelinePrintArea">
-      <ul class="list-disc list-inside">
-        ${timeline.map(t => `<li><strong>${t.label}:</strong> ${t.date}</li>`).join("")}
-      </ul>
-      <p class="mt-4 text-sm text-gray-700 font-semibold">⏱ Duration: ${totalDays} calendar days (${businessDays} business days)</p>
-      <p class="mt-1 text-sm text-gray-600">Estimated Schedule Length Based on Complexity: ~${durations[complexity]} calendar days + TCV adjustments</p>
-      ${tcvNote ? `<p class="mt-1 text-sm text-yellow-700">${tcvNote}</p>` : ""}
-      <p class="mt-1 text-xs text-yellow-700 italic">⚠️ Timeline estimates are for planning only. Final schedules are confirmed by Procurement Services.</p>
-    </div>
+let timelineHTML = `
+  <ul class="list-disc list-inside">
+    ${timeline.map(t => `<li><strong>${t.label}:</strong> ${t.date}</li>`).join("")}
+  </ul>
+  <p class="mt-4 text-sm text-gray-700 font-semibold">⏱ Duration: ${totalDays} calendar days (${businessDays} business days)</p>
+  ${tcvNote ? `<p class="mt-1 text-sm text-yellow-700">${tcvNote}</p>` : ""}
+  <p class="mt-1 text-xs text-yellow-700 italic">⚠️ Timeline estimates are for planning only. Final schedules are confirmed by Procurement Services.</p>
+`;
+
+output.innerHTML = `<div id="timelinePrintArea">${timelineHTML}</div>`;
   `;
 }
 
