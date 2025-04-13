@@ -8,38 +8,29 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-inter">
-  <div class="max-w-4xl mx-auto p-6 space-y-10">
+  <div class="max-w-5xl mx-auto p-6 space-y-12">
+
+    <!-- Header -->
     <header class="text-center">
       <h1 class="text-3xl font-bold text-blue-900">VCU RFP Navigator</h1>
-      <p class="text-sm text-gray-600">Interactive guide through the VCU RFP process</p>
+      <p class="text-sm text-gray-600">Interactive guide through the formal RFP process</p>
     </header>
 
     <!-- Timeline Builder -->
     <section>
-      <h2 class="text-xl font-semibold text-blue-800 mb-4">Interactive RFP Timeline Builder</h2>
+      <h2 class="text-xl font-semibold text-blue-800 mb-2">Interactive RFP Timeline Builder</h2>
+      <p class="text-sm text-gray-600 mb-4">Use this tool to generate a sample timeline. Actual RFP dates will be finalized with Procurement Services.</p>
       <div class="space-y-4">
-        <div>
-          <label class="block font-medium">Project Type:</label>
-          <select id="projectType" class="border rounded p-2 w-full">
-            <option value="">Select a type</option>
-            <option>IT</option>
-            <option>Services</option>
-            <option>Research/Scientific</option>
-            <option>Facilities Related</option>
-            <option>Hospitality</option>
-          </select>
-        </div>
-        <div>
-          <label class="block font-medium">Complexity:</label>
-          <select id="complexity" class="border rounded p-2 w-full">
-            <option value="">Select complexity</option>
-            <option value="low">Simple</option>
-            <option value="medium">Moderate</option>
-            <option value="high">Complex</option>
-          </select>
-        </div>
+        <label class="block font-medium">Project Complexity:</label>
+        <select id="complexity" class="border rounded p-2 w-full max-w-md">
+          <option value="">Select complexity</option>
+          <option value="low">Simple</option>
+          <option value="medium">Moderate</option>
+          <option value="high">Complex</option>
+        </select>
         <button onclick="generateTimeline()" class="px-4 py-2 bg-blue-800 text-white rounded">Generate Timeline</button>
-        <div id="timelineOutput" class="mt-4"></div>
+        <div id="timelineOutput" class="mt-4 text-sm text-gray-700"></div>
+        <p class="mt-2 text-xs text-yellow-700 italic">⚠️ This tool is for planning only. Timelines are finalized by Procurement Services.</p>
       </div>
     </section>
 
@@ -49,14 +40,13 @@
       <div id="processAccordion" class="space-y-2"></div>
     </section>
 
-    <!-- COI Checklist -->
+    <!-- Evaluator Checklist -->
     <section>
-      <h2 class="text-xl font-semibold text-blue-800 mb-4">Evaluator Readiness & COI Checklist</h2>
-      <form id="coiChecklist" class="space-y-2">
-        <!-- populated by JS -->
-      </form>
-      <button onclick="reviewCOI()" class="mt-4 px-4 py-2 bg-green-600 text-white rounded">Submit Acknowledgment</button>
-      <div id="coiResults" class="mt-4 text-sm text-green-700"></div>
+      <h2 class="text-xl font-semibold text-blue-800 mb-2">Evaluator Readiness & COI Acknowledgment</h2>
+      <p class="text-sm mb-4 text-gray-700">Before serving on an evaluation committee, it is important to understand your responsibilities and obligations. This checklist provides a summary. Official COI forms and project specifics will be coordinated by your assigned buyer.</p>
+      <form id="coiChecklist" class="space-y-2"></form>
+      <button onclick="reviewCOI()" class="mt-4 px-4 py-2 bg-green-700 text-white rounded">Complete Acknowledgment</button>
+      <div id="coiResults" class="mt-4 text-sm text-green-800"></div>
     </section>
 
     <!-- Resource Hub -->
@@ -70,6 +60,7 @@
         <li><a href="mailto:purchasing@vcu.edu">Email Procurement</a></li>
       </ul>
     </section>
+
   </div>
   <script src="script.js"></script>
 </body>
