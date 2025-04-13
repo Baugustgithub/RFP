@@ -1,31 +1,3 @@
-function addBusinessDays(date, days) {
-  let count = 0;
-  while (count < days) {
-    date.setDate(date.getDate() + 1);
-    const day = date.getDay();
-    if (day !== 0 && day !== 6) count++;
-  }
-  return date;
-}
-
-function nextWeekday(date) {
-  const day = date.getDay();
-  if (day === 6) date.setDate(date.getDate() + 2);
-  if (day === 0) date.setDate(date.getDate() + 1);
-  return date;
-}
-
-function countBusinessDays(start, end) {
-  let count = 0;
-  const date = new Date(start);
-  while (date <= end) {
-    const day = date.getDay();
-    if (day !== 0 && day !== 6) count++;
-    date.setDate(date.getDate() + 1);
-  }
-  return count;
-}
-
 function generateTimeline() {
   const complexity = document.getElementById('complexity').value;
   const tcv = document.getElementById('tcv').value;
@@ -37,25 +9,37 @@ function generateTimeline() {
   }
 
   let complexityOffset = 0;
-  if (complexity === "medium") complexityOffset = 1;
-  if (complexity === "high") complexityOffset = 2;
+  if (complexity === "medium") complexityOffset = 2;
+  if (complexity === "high") complexityOffset = 3;
 
   const steps = [
-    { label: "Submit a Requisition and Discussion", offset: 5, type: "business" },
+    { label: "Submit a Requisition and Discussion", offset: 2, type: "business" },
     { label: "Initial RFP Draft Due to Procurement", offset: 3, type: "business" },
-    { label: "Procurement Review and Edit", offset: 6, type: "business" },
+    { label: "Procurement Review and Edit", offset: 5, type: "business" },
     { label: "Final Draft to Procurement for Posting", offset: 3, type: "business" },
-    { label: "RFP Issued via eVA", offset: 1, type: "business" },
-    { label: "Firm Questions Due", offset: 10, type: "business" },
-    { label: "Addendum/Answers Issued", offset: 4, type: "business" },
-    { label: "Proposals Due", offset: 15, type: "business" },
+    { label: "RFP Issued via eVA", offset: 2, type: "business" },
+    { label: "Firm Questions Due", offset: 10, type: "calendar" },
+    { label: "Addendum/Answers Issued", offset: 5, type: "calendar" },
+    { label: "Proposals Due", offset: 15, type: "calendar" },
     { label: "Proposals Screened and Shared with Evaluators", offset: 4, type: "business" },
     { label: "Evaluations Begin", offset: 1, type: "business" },
     { label: "Evaluation Period", offset: 7, type: "business" },
     { label: "Oral Presentations (if used)", offset: 5, type: "business" },
     { label: "Negotiation Period", offset: 7, type: "business" },
-    { label: "Award Justification & Contract Finalization", offset: 12, type: "business" },
-    { label: "Anticipated Award", offset: 1, type: "business" }
+    { label: "Award Justification & Contract Finalization", offset: 10, type: "fixed" },
+    { label: "Anticipated Award", offset: 2, type: "calendar" }
+  ];
+
+  const excludedSteps = [
+    "Submit a Requisition and Discussion",
+    "Initial RFP Draft Due to Procurement",
+    "Procurement Review and Edit",
+    "Final Draft to Procurement for Posting",
+    "RFP Issued via eVA",
+    "Firm Questions Due",
+    "Addendum/Answers Issued",
+    "Proposals Due",
+    "Proposals Screened and Shared with Evaluators"
   ];
 
   const fixedAwardDate = new Date("2025-07-02");
@@ -65,14 +49,15 @@ function generateTimeline() {
 
   steps.forEach((step) => {
     let date;
+    const useOffset = excludedSteps.includes(step.label) ? 0 : complexityOffset;
 
     if (step.type === "fixed" && step.label === "Award Justification & Contract Finalization") {
       date = new Date(fixedAwardDate);
     } else if (step.type === "business") {
-      date = addBusinessDays(baseDate, step.offset + complexityOffset);
+      date = addBusinessDays(baseDate, step.offset + useOffset);
     } else {
       date = new Date(baseDate);
-      date.setDate(date.getDate() + step.offset + complexityOffset);
+      date.setDate(date.getDate() + step.offset + useOffset);
       date = nextWeekday(date);
     }
 
@@ -85,7 +70,6 @@ function generateTimeline() {
     }
   });
 
-  // ✅ Accurate date duration after timeline is fully generated
   const timelineStart = new Date(timeline[0].date);
   const timelineEnd = new Date(timeline[timeline.length - 1].date);
   const totalDays = Math.round((timelineEnd - timelineStart) / (1000 * 60 * 60 * 24)) + 1;
