@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VCU RFP Navigator</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-inter">
-  <div class="max-w-5xl mx-auto p-6 space-y-12">
+  <div id="pageContent" class="max-w-5xl mx-auto p-6 space-y-12">
 
     <!-- Intro Message -->
     <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6 rounded">
@@ -35,8 +36,10 @@
           <option value="medium">Moderate</option>
           <option value="high">Complex</option>
         </select>
-        <button onclick="generateTimeline()" class="px-4 py-2 bg-yellow-600 text-white rounded font-semibold">Generate Timeline</button>
-        <button onclick="downloadPDF()" class="ml-4 px-4 py-2 bg-gray-700 text-white rounded font-semibold">Download as PDF</button>
+        <div class="flex gap-4 flex-wrap">
+          <button onclick="generateTimeline()" class="px-4 py-2 bg-yellow-600 text-white rounded font-semibold">Generate Timeline</button>
+          <button onclick="downloadPDF()" class="px-4 py-2 bg-gray-700 text-white rounded font-semibold">Download Full Page as PDF</button>
+        </div>
         <div id="timelineOutput" class="mt-4 text-sm text-gray-700"></div>
       </div>
     </section>
