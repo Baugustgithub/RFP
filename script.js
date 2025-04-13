@@ -1,3 +1,31 @@
+function addBusinessDays(date, days) {
+  let count = 0;
+  while (count < days) {
+    date.setDate(date.getDate() + 1);
+    const day = date.getDay();
+    if (day !== 0 && day !== 6) count++;
+  }
+  return date;
+}
+
+function nextWeekday(date) {
+  const day = date.getDay();
+  if (day === 6) date.setDate(date.getDate() + 2);
+  if (day === 0) date.setDate(date.getDate() + 1);
+  return date;
+}
+
+function countBusinessDays(start, end) {
+  let count = 0;
+  const date = new Date(start);
+  while (date <= end) {
+    const day = date.getDay();
+    if (day !== 0 && day !== 6) count++;
+    date.setDate(date.getDate() + 1);
+  }
+  return count;
+}
+
 function generateTimeline() {
   const complexity = document.getElementById('complexity').value;
   const tcv = document.getElementById('tcv').value;
