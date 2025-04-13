@@ -66,17 +66,28 @@ function generateTimeline() {
   let timeline = [];
   let baseDate = new Date(base);
 
-  steps.forEach(step => {
-    let date = new Date(baseDate);
-    if (step.type === "business") {
-      date = addBusinessDays(date, step.offset);
-    } else {
-      date.setDate(date.getDate() + step.offset);
-      date = nextWeekday(date);
-    }
-    timeline.push({ label: step.name, date: date.toDateString() });
-    baseDate = new Date(date);
-  });
+let date;
+if (step.label === "Award Justification & Contract Finalization") {
+  date = new Date(fixedDate);
+} else if (step.type === "business") {
+  date = addBusinessDays(baseDate, step.offset);
+} else {
+  date = new Date(baseDate);
+  date.setDate(date.getDate() + step.offset);
+  date = nextWeekday(date);
+}
+timeline.push({ label: step.name, date: date.toDateString() });
+baseDate = new Date(date);
+
+// Now apply TCV delay to Anticipated Award
+if (step.label === "Award Justification & Contract Finalization") {
+  if (tcv === "2m") {
+    baseDate.setDate(baseDate.getDate() + 10);
+  } else if (tcv === "5m") {
+    baseDate.setDate(baseDate.getDate() + 30);
+  }
+}
+
 
   output.innerHTML = `
     <div id="timelinePrintArea">
