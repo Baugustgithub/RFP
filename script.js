@@ -10,8 +10,8 @@ function addBusinessDays(date, days) {
 
 function nextWeekday(date) {
   const day = date.getDay();
-  if (day === 6) date.setDate(date.getDate() + 2); // Saturday -> Monday
-  if (day === 0) date.setDate(date.getDate() + 1); // Sunday -> Monday
+  if (day === 6) date.setDate(date.getDate() + 2);
+  if (day === 0) date.setDate(date.getDate() + 1);
   return date;
 }
 
@@ -30,81 +30,105 @@ function generateTimeline() {
     high: 130
   };
 
-  const base = addBusinessDays(new Date(), 10); // Draft RFP Due
-  const milestones = [
-    { name: "Draft RFP Due to Buyer", offset: 0, type: "business" },
-    { name: "Buyer Posts RFP (Issue Date)", offset: 10, type: "business" },
-    { name: "Vendor Questions Due", offset: 10, type: "calendar" },
-    { name: "Answers/Addenda Posted", offset: 4, type: "calendar" },
-    { name: "Proposals Due", offset: 15, type: "calendar" },
-    { name: "Evaluations Begin", offset: 2, type: "business" },
-    { name: "Evaluation Completion", offset: 5, type: "business" },
-    { name: "Negotiation Window", offset: 5, type: "business" },
-    { name: "Anticipated Award", offset: 5, type: "business" }
+  const start = addBusinessDays(new Date(), 0);
+  const steps = [
+    { name: "Planning call with Procurement", offset: 0, type: "business" },
+    { name: "Initial RFP draft due to Procurement", offset: 2, type: "business" },
+    { name: "Procurement review and edit", offset: 5, type: "business" },
+    { name: "Final draft to Procurement for posting", offset: 3, type: "business" },
+    { name: "RFP issued via eVA (Smartsheet)", offset: 2, type: "business" },
+    { name: "Vendor questions due", offset: 10, type: "calendar" },
+    { name: "Addendum/answers issued", offset: 4, type: "calendar" },
+    { name: "Proposals due", offset: 15, type: "calendar" },
+    { name: "Redacted proposals shared with evaluators", offset: 1, type: "business" },
+    { name: "Evaluations begin", offset: 1, type: "business" },
+    { name: "Evaluation period", offset: 7, type: "business" },
+    { name: "Oral presentations (if used)", offset: 2, type: "business" },
+    { name: "Negotiation period", offset: 5, type: "business" },
+    { name: "Anticipated award posted", offset: 3, type: "business" }
   ];
 
-  const dates = [];
-  let prevDate = new Date(base);
+  let timeline = [];
+  let baseDate = new Date(start);
 
-  for (let i = 0; i < milestones.length; i++) {
-    let date = new Date(prevDate);
-    if (milestones[i].type === "business") {
-      date = addBusinessDays(date, milestones[i].offset);
+  steps.forEach(step => {
+    let date = new Date(baseDate);
+    if (step.type === "business") {
+      date = addBusinessDays(date, step.offset);
     } else {
-      date.setDate(date.getDate() + milestones[i].offset);
+      date.setDate(date.getDate() + step.offset);
       date = nextWeekday(date);
     }
-    dates.push({ name: milestones[i].name, date: date.toDateString() });
-    prevDate = new Date(date);
-  }
+    timeline.push({ label: step.name, date: date.toDateString() });
+    baseDate = new Date(date);
+  });
 
-  const totalDays = durations[complexity];
   output.innerHTML = `
     <ul class="list-disc list-inside">
-      ${dates.map(d => `<li><strong>${d.name}:</strong> ${d.date}</li>`).join("")}
+      ${timeline.map(t => `<li><strong>${t.label}:</strong> ${t.date}</li>`).join("")}
     </ul>
-    <p class="mt-2 text-sm text-gray-600">Total Estimated Timeline: ~${totalDays} calendar days</p>
-    <p class="mt-1 text-xs text-yellow-700 italic">⚠️ This tool mirrors typical RFP schedules but actual timelines are determined by Procurement Services.</p>
+    <p class="mt-2 text-sm text-gray-600">Estimated Total Duration: ~${durations[complexity]} calendar days</p>
+    <p class="mt-1 text-xs text-yellow-700 italic">⚠️ Timeline estimates based on standard RFP flows. Actual dates are confirmed by Procurement Services.</p>
   `;
 }
 
-// --- Expanded RFP Process Explorer ---
+// --- Full Process Explorer with official descriptions ---
 const processSteps = [
   {
-    title: "1. Planning & Requisition",
-    detail: "Departments must confirm internal funding and submit a requisition in RealSource. Projects over $10,000 require this step. Procurement will assign a buyer once the requisition is received."
+    title: "1. Planning Call with Procurement",
+    detail: "An initial meeting is scheduled between the department and Procurement to align on goals, timeline, and roles. This ensures early coordination and sets expectations."
   },
   {
-    title: "2. Developing the RFP",
-    detail: "The department drafts the RFP using VCU’s template, working with their assigned buyer. This includes writing the Statement of Needs, evaluation criteria, and anticipated outcomes."
+    title: "2. Initial RFP Draft Due to Procurement",
+    detail: "The department submits the first version of the RFP. This includes the statement of needs, background, evaluation criteria, and timeline preferences."
   },
   {
-    title: "3. Internal Review & Posting",
-    detail: "The buyer reviews the RFP for completeness and compliance. Once approved, the RFP is posted publicly through Smartsheet to eVA for vendor access."
+    title: "3. Procurement Review and Edit",
+    detail: "Procurement reviews the draft to ensure compliance with the Virginia Public Procurement Act and university policies. Edits are made as needed."
   },
   {
-    title: "4. Vendor Q&A Period",
-    detail: "Vendors submit written questions by the due date. The buyer coordinates answers with the department and issues formal addenda back through Smartsheet."
+    title: "4. Final Draft to Procurement for Posting",
+    detail: "After review, the final RFP is submitted to Procurement for public posting. All required approvals and internal sign-offs should be complete at this stage."
   },
   {
-    title: "5. Proposal Submission & Closing",
-    detail: "All proposals must be submitted before the listed deadline. Late submissions are not accepted. Buyers ensure all requirements are met before forwarding to evaluators."
+    title: "5. RFP Issued via eVA (Smartsheet)",
+    detail: "Procurement posts the RFP on eVA and coordinates responses via Smartsheet. The public posting period typically ranges from 25–35 days."
   },
   {
-    title: "6. Evaluation Preparation",
-    detail: "Evaluation committee members are selected and must sign the COI certification. Proposals are redacted if necessary and shared for individual scoring."
+    title: "6. Vendor Questions Due",
+    detail: "Vendors are given an opportunity to submit written questions. The due date must be clearly stated in the RFP timeline."
   },
   {
-    title: "7. Scoring & Discussions",
-    detail: "Evaluators independently score proposals. The committee may meet to discuss scores, identify a shortlist, and prepare for oral presentations if used."
+    title: "7. Addendum/Answers Issued",
+    detail: "Procurement works with the department to draft official responses and posts them via Smartsheet as an addendum to the RFP."
   },
   {
-    title: "8. Negotiations & Selection",
-    detail: "Buyers lead negotiations with top-ranked firms. Final scoring may be adjusted post-negotiation. An award recommendation is compiled by the committee."
+    title: "8. Proposals Due",
+    detail: "All proposals must be received by the deadline. Late submissions will not be accepted. Procurement checks compliance before forwarding to evaluators."
   },
   {
-    title: "9. Award & Contracting",
-    detail: "Award decisions are posted on eVA. The buyer finalizes the contract and coordinates onboarding or transition steps with the awarded vendor."
+    title: "9. Redacted Proposals Shared with Evaluators",
+    detail: "Procurement redacts proposals (if needed) to remove pricing or other sensitive data before distributing them to the evaluation team."
+  },
+  {
+    title: "10. Evaluations Begin",
+    detail: "Evaluators receive their scoring sheets and begin reviewing proposals independently based on the published evaluation criteria."
+  },
+  {
+    title: "11. Evaluation Period",
+    detail: "Evaluators complete their scoring. Procurement may schedule a group review meeting to compile scores and shortlist top offers."
+  },
+  {
+    title: "12. Oral Presentations (if used)",
+    detail: "If specified in the RFP, top vendors may be invited to present. This helps clarify solutions and adds depth to evaluations."
+  },
+  {
+    title: "13. Negotiation Period",
+    detail: "Procurement leads negotiations with the top-ranked vendor(s). This may include scope clarification, pricing, or terms refinement."
+  },
+  {
+    title: "14. Anticipated Award Posted",
+    detail: "Once final evaluations and negotiations are complete, an award notice is posted on eVA and the selected vendor is notified."
   }
 ];
 
