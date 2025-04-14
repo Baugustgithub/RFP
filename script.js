@@ -171,11 +171,11 @@ window.onload = () => {
     },
     {
       title: "5. RFP Issued via eVA",
-      detail: "Procurement posts the RFP on eVA and coordinates vendor responses via Smartsheet. Standard posting is 25–35 days."
+      detail: "Procurement posts the RFP on eVA and coordinates firm responses via Smartsheet. Standard posting is 25–35 days."
     },
     {
       title: "6. Firm Questions Due",
-      detail: "Vendors may submit questions by the deadline in the RFP. Procurement manages this deadline."
+      detail: "Firms may submit questions by the deadline in the RFP. Procurement manages this deadline."
     },
     {
       title: "7. Addendum/Answers Issued",
@@ -199,7 +199,7 @@ window.onload = () => {
     },
     {
       title: "12. Oral Presentations (if used)",
-      detail: "Selected vendors may be invited to present to the evaluation team. Attendance is coordinated by Procurement."
+      detail: "Selected firms may be invited to present to the evaluation team. Attendance is coordinated by Procurement."
     },
     {
       title: "13. Negotiation Period",
@@ -211,7 +211,7 @@ window.onload = () => {
     },
     {
       title: "15. Anticipated Award",
-      detail: "The award is publicly posted to eVA. Vendors are notified, and the project may begin following formal execution."
+      detail: "The award is publicly posted to eVA. Firms are notified, and the project may begin following formal execution."
     }
   ];
 
@@ -225,9 +225,9 @@ window.onload = () => {
 
   const checklist = [
     "I understand my role as an evaluator and will score proposals fairly.",
-    "I will not communicate with vendors or disclose proposal contents.",
+    "I will not communicate with firms or disclose proposal contents.",
     "I have no financial/personal interests in any offerors.",
-    "I have not accepted gifts, payments, or favors from vendors.",
+    "I have not accepted gifts, payments, or favors from firms.",
     "I will comply with state procurement laws and university policy."
   ];
 
